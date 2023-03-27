@@ -39,13 +39,15 @@ function largestRange(array = []) {
     }
     let length = 1;
     const lengthArr = [currentVal];
-
+    let minLeft = array[i];
+    let maxRight = array[i];
     // traverse left
     while (true) {
       const valToFind = currentVal - 1;
       if (!map.has(valToFind) || map.get(valToFind)) {
         break;
       }
+      minLeft = Math.min(minLeft, valToFind);
       length++;
       lengthArr.push(valToFind);
       map.set(valToFind, true);
@@ -59,6 +61,7 @@ function largestRange(array = []) {
       if (!map.has(valToFind) || map.get(valToFind)) {
         break;
       }
+      maxRight = Math.max(maxRight, valToFind);
       length++;
       lengthArr.push(valToFind);
       map.set(valToFind, true);
@@ -70,7 +73,8 @@ function largestRange(array = []) {
     if (length >= maxLength) {
       maxLengthArrays = lengthArr;
       maxLength = length;
-      maxLengthRange = [Math.min(...lengthArr), Math.max(...lengthArr)];
+      // maxLengthRange = [Math.min(...lengthArr), Math.max(...lengthArr)];
+      maxLengthRange = [minLeft, maxRight];
     }
   }
   return maxLengthRange
